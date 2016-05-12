@@ -1,0 +1,68 @@
+#time
+{
+  background-color:red;
+  top:20px;
+  width:350px;
+  height:100px;
+}
+#baseTime
+{
+  color:rgb(16,250,94);
+  font-size:72px;
+}
+#seconds
+{
+  color:rgb(29,255,201);
+  font-size:48px;
+}
+#weather
+{
+  background-color:lightblue;
+  margin-top:20px;
+  top:100px;
+  height:500px;
+  width:350px;
+}
+#reddit
+{
+  position:absolute;
+  top:10px;
+  left:400px;
+  width:400px;
+  height:500px;
+  background-color:yellow;
+  overflow-y:scroll;
+}
+.post
+{
+  font-size:16px;
+  font-family:Arial, Helvetica, sans-serif;
+  padding:10px;
+}
+#comicArea
+{
+  position:absolute;
+  right:20px;
+  top:10px;
+  background-color:lightblue;
+  height:500px;
+  width:500px;
+}
+#comic
+{
+  position:absolute;
+  height: auto;
+  width: auto;
+  max-width:500px;
+  max-height:500px;
+}
+#hoverDiv
+{
+  width:500px;
+  position:absolute;
+  bottom:0;
+  left:0;
+}
+#reddit::-webkit-scrollbar {
+    display: none;
+}
