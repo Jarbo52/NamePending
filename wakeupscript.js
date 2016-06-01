@@ -24,34 +24,28 @@ var getTime = function()
 
 var weather = "a";
 
-$.getJSON("http://api.openweathermap.org/data/2.5/weather?id=5101305&appid=d426f0781e43626cb493b5d0def4e943", function(data)
+$.getJSON("http://api.wunderground.com/api/f07e43d1185afda5/conditions/q/NJ/Manalapan.json", function(data)
   {
     weatherData = data;
     
     var raining = "None";
-    if(weatherData.hasOwnProperty('rain'))
-    {
-      var lengthRain = Object.keys(weatherData.rain);
-      raining = weatherData.rain[lengthRain];
-    }
-    if(raining.valueOf() === "None")
-      document.getElementById("isRaining").innerHTML = "Clear";
-    else
-      document.getElementById("isRaining").innerHTML = "Raining";
     
-    var temperatureKelvin = 0;
-    temperatureKelvin = weatherData.main["temp"];
-    var temperature = toFahrenheit(temperatureKelvin);
+    var weatherPic = document.getElementById("weatherPicture");
+    weatherPic.src = weatherData.current_observation["icon_url"];
+    var condition = weatherData.current_observation["weather"];
+    document.getElementById("isRaining").innerHTML = condition;
     
-    var toAdd = Math.round(temperature) + '\xB0' + "F";
+    var temperature = weatherData.current_observation["temp_f"];
+    var toAdd = temperature + '\xB0' + "F";
     document.getElementById("temperature").innerHTML = toAdd;
-    
+    var tempFeelsLike = weatherData.current_observation["feelslike_f"];
+    toAdd = tempFeelsLike + '\xB0' + "F";
+    document.getElementById("feelsLike").innerHTML = toAdd;
+    var humidity = weatherData.current_observation["relative_humidity"];
+    document.getElementById("humidity").innerHTML = humidity;
+    var uv = weatherData.current_observation["UV"];
+    document.getElementById("uv").innerHTML = uv;
   });
-
-function toFahrenheit(kelvinTemp)
-{
-  return kelvinTemp * 9 / 5 - 459.67;
-}
 
 var scrolled=0;
 

@@ -63,6 +63,37 @@
   bottom:0;
   left:0;
 }
-#reddit::-webkit-scrollbar {
+#reddit::-webkit-scrollbar
+{
     display: none;
+}
+#weatherPicture
+{
+  padding-top:10px;
+  padding-bottom:10px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  width:100px;
+  height:100px;
+  margin-top:0;
+  margin-bottom:0;
+}
+.weatherPart
+{
+  margin-top:0;
+  color:rgb(147,98,94);
+  font-size:36px;
+  text-align:center;
+  font-family:Impact, Charcoal, sans-serif;
+  margin-bottom:0;
+}
+.weatherDescriber
+{
+  text-align:center;
+  font-family:Impact, Charcoal, sans-serif;
+  font-size:18px;
+  margin-top:10px;
+  margin-bottom:0;
+  color:rgb(150,150,0);
 }

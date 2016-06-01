@@ -59,7 +59,9 @@ hoverText = '<p id="comicHover">Hover Text: ' + hoverTextUrl + '</p>'
 print comic
 print hoverText
 
-page2 = requests.get("http://api.openweathermap.org/data/2.5/weather?id=5101305&appid=d426f0781e43626cb493b5d0def4e943")
+page2 = requests.get("https://www.wunderground.com/DisplayPollen.asp?Zipcode=07726")
+tree2 = html.fromstring(page2.content)
+pollenCount = tree2.xpath('//*[@id="inner-content"]/div[1]/div[2]/div[1]/table/tr[2]/td[5]/p')[0].text
 
 placeholders = []
 for i in range(10):
@@ -74,6 +76,8 @@ readyToReplace = []
 
 for x in tags:
   readyToReplace.append('id="'+x+'"')
+  
+readyToReplace.append('id="pollen"')
   
 print readyToReplace
 
@@ -95,12 +99,12 @@ while counter < 10:
 toReplace.append(comic)
 toReplace.append(hoverText)
 
+
 for i, post in enumerate(postArray):
   toReplace.append('<li class="post" ' + readyToReplace[i+2] + '>' + post + '</li>')
   
+toReplace.append('<p class="weatherPart" id="pollen">' + pollenCount + '</p>')
+  
 print '*************************************'
 
-for x in toReplace:
-  print x
-
-replace('/home/jared/Downloads/wakeup.html',readyToReplace,toReplace)
+replace('/home/jared/Downloads/SeniorProject/wakeup.html',readyToReplace,toReplace)
