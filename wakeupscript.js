@@ -1,8 +1,20 @@
+//Pads string
 function pad(width, string, padding)
 {
   return (width <= string.length) ? string : pad(width, padding + string, padding);
 }
 
+//Constructs Unix timestamp of 7:25AM of todays date
+function getArrivalTime()
+{
+  var date = new Date();
+  
+  var arrival = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 7, 25, 0, 0);
+  
+  return arrival.getTime();
+}
+
+//Gets time
 var getTime = function()
 {
   var date = new Date();
@@ -24,12 +36,14 @@ var getTime = function()
 
 var weather = "a";
 
+//Gets WeatherChannel data
 $.getJSON("http://api.wunderground.com/api/f07e43d1185afda5/conditions/q/NJ/Manalapan.json", function(data)
   {
     weatherData = data;
     
     var raining = "None";
     
+    //Parses weather data and adds it to the page
     var weatherPic = document.getElementById("weatherPicture");
     weatherPic.src = weatherData.current_observation["icon_url"];
     var condition = weatherData.current_observation["weather"];
@@ -47,16 +61,66 @@ $.getJSON("http://api.wunderground.com/api/f07e43d1185afda5/conditions/q/NJ/Mana
     document.getElementById("uv").innerHTML = uv;
   });
 
-var scrolled=0;
+//Constructs call to Google API
+var stringP1 = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=33+Bloomfield+Road+Manalapan,NJ&destinations=2+Robertsville+Road+Freehold,NJ&arrival_time=";
+var stringP2 = "&key=AIzaSyDu5B6uWc6kA7RFEWgMAr4Ixbc4tfMyzjk";
+var arrivalTime = getArrivalTime();
 
+var googleCall = stringP1 + arrivalTime + stringP2;
+
+//Gets Google API data
+$.getJSON(googleCall,function(data)
+{
+  trafficData = data;
+  
+  var today = new Date();
+  var dayNum = today.getDate();
+  
+  var secondsOfTravel = trafficData.rows[0].elements[0].duration["value"] + 120;
+  var displayTime = trafficData.rows[0].elements[0].duration["text"];
+  
+  var displayString = "";
+  var lotStreet = "";
+  var minutesOfTravel = 0;
+  var leaveMin = 0;
+  
+  //Checks if day is even
+  if(dayNum % 2 === 0)
+  {
+    //lot
+    lotStreet = "It is an even day, you get to park in the lot.";
+    minutesOfTravel = Math.ceil(secondsOfTravel/60);
+    leaveMin = 25 - minutesOfTravel;
+  }
+  else
+  {
+    //street
+    lotStreet = "It is an odd day, you need to park on the street.";
+    secondsOfTravel = secondsOfTravel + 300;
+    minutesOfTravel = Math.ceil(secondsOfTravel/60);
+    leaveMin = 25 - minutesOfTravel;
+  }
+  
+  displayString = "It will take you about " + displayTime + " to get to school. You should leave by 7:" + pad(2,String(leaveMin),0) + ".";
+  
+  //Sets traffic info
+  document.getElementById("oddEven").innerHTML = lotStreet;
+  document.getElementById("drivingTime").innerHTML = displayString;
+});
+
+var scrolled=0;
+//scrolls reddit posts
 $(document).ready(function(){
   
   var scrolled = 0;
   
+  //Calls this code every 14 seconds
   setInterval(function()
   {
-    scrolled=225;
+    //bottom of page
+    scrolled=250;
     
+    //Scrolls
 		$("#reddit").animate({
 			scrollTop:  scrolled
 		},
@@ -64,10 +128,13 @@ $(document).ready(function(){
 		  duration:1500
 		});
 		
+		//Waits 7 seconds then calls this code
     setTimeout(function()
     {
+      //top of page
       scrolled=0;
     
+      //scrolls
 		  $("#reddit").animate({
 			  scrollTop:  scrolled
 		  },
@@ -80,4 +147,5 @@ $(document).ready(function(){
 
 });
 
+//calls method to update time every second
 var timer =  setInterval(getTime, 1000);
