@@ -37,7 +37,7 @@ var getTime = function()
 var weather = "a";
 
 //Gets WeatherChannel data
-$.getJSON("http://api.wunderground.com/api/f07e43d1185afda5/conditions/q/NJ/Manalapan.json", function(data)
+$.getJSON("http://api.wunderground.com/api/XXXXXXXXXX/conditions/q/NJ/Manalapan.json", function(data)
   {
     weatherData = data;
     
@@ -62,8 +62,8 @@ $.getJSON("http://api.wunderground.com/api/f07e43d1185afda5/conditions/q/NJ/Mana
   });
 
 //Constructs call to Google API
-var stringP1 = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=33+Bloomfield+Road+Manalapan,NJ&destinations=2+Robertsville+Road+Freehold,NJ&arrival_time=";
-var stringP2 = "&key=AIzaSyDu5B6uWc6kA7RFEWgMAr4Ixbc4tfMyzjk";
+var stringP1 = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&originsXXXXXXXXXXXXXXXX&destinations=2+Robertsville+Road+Freehold,NJ&arrival_time=";
+var stringP2 = "&key=XXXXXXXXXXXXXXXX";
 var arrivalTime = getArrivalTime();
 
 var googleCall = stringP1 + arrivalTime + stringP2;
